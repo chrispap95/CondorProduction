@@ -71,7 +71,7 @@ def getSchedd(scheddurl,coll=""):
             scheddAd = coll.locate(htcondor.DaemonTypes.Schedd, scheddurl)
             schedd = htcondor.Schedd(scheddAd)
         except:
-            print "Warning: could not locate schedd "+scheddurl
+            print("Warning: could not locate schedd "+scheddurl)
             return None
     else:
         schedd = htcondor.Schedd() # defaults to local
@@ -101,14 +101,14 @@ def getJobs(options, scheddurl=""):
 def printJobs(jobs, num=False, prog=False, stdout=False, why=False, matched=False):
     if len(jobs)==0: return
     
-    print "\n".join([
+    print("\n".join([
         (j.stdout if stdout else j.name)+
         (" ("+j.num+")" if num else "")+
         (" ({:d} events in {:.1f} hours = {:.1f} evt/sec)".format(j.events,j.time,j.rate) if prog else "")+
         (" : "+j.matched+", "+j.machine if matched and len(j.matched)>0 and len(j.machine)>0 else "")+
         (" : "+j.why if why and len(j.why)>0 else "")
         for j in jobs
-    ])
+    ]))
 
 def resubmitJobs(jobs,options,scheddurl=""):
     # get scheduler
@@ -119,7 +119,7 @@ def resubmitJobs(jobs,options,scheddurl=""):
         try:
             edits = json.loads(options.edit)
         except:
-            print "edit not specified in JSON format! Exiting."
+            print("edit not specified in JSON format! Exiting.")
             sys.exit(1)
     # create backup dir if desired
     backup_dir = ""
@@ -275,7 +275,7 @@ def manageJobs(argv=None):
     for sch in all_nodes:
         jobs = getJobs(options,sch)
         if len(jobs)>0:
-            if len(sch)>0: print sch
+            if len(sch)>0: print(sch)
             if not options.xrootdResubmit: printJobs(jobs,options.num,options.progress,options.stdout,options.why,options.matched)
 
             # resubmit or remove jobs

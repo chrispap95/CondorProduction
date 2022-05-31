@@ -43,8 +43,8 @@ def pyxrdcp(a,b,verbose=True):
     xrdcp_result = xrdcp.communicate()
     rc = xrdcp.returncode
     if rc!=0 and verbose:
-        print "exit code "+str(rc)+", failure in xrdcp"
-        print xrdcp_result[1]
+        print("exit code "+str(rc)+", failure in xrdcp")
+        print(xrdcp_result[1])
     return rc
 
 class protoJob(object):
@@ -314,7 +314,7 @@ class jobSubmitter(object):
         self.njobs += job.njobs
 
     def finishCount(self):
-        print str(self.njobs)+" jobs"
+        print(str(self.njobs)+" jobs")
 
     def doPrepare(self,job):
         # get template contents (move into separate fn/store in self?)
@@ -342,7 +342,7 @@ class jobSubmitter(object):
                 cmd = "condor_submit "+job.jdl+" "+job.queue
             os.system(cmd)
         else:
-            print "Error: couldn't find "+job.jdl+", try running in prepare mode"
+            print("Error: couldn't find "+job.jdl+", try running in prepare mode")
 
     def doMissing(self,job):
         jobSet, jobDict = self.findJobs(job)
@@ -390,9 +390,9 @@ class jobSubmitter(object):
             if len(self.resub)>0:
                 self.makeResubmit()
             else:
-                print '\n'.join(self.missingLines)
+                print('\n'.join(self.missingLines))
         else:
-            print "No missing jobs!"
+            print("No missing jobs!")
 
     def finishedToJobName(self,val):
         return val.split("/")[-1].replace(".root","")
@@ -416,7 +416,7 @@ class jobSubmitter(object):
             global htcondor,classad
             import htcondor,classad
         except:
-            print 'Could not import htcondor bindings!'
+            print('Could not import htcondor bindings!')
             return False
         return True
 
@@ -428,7 +428,7 @@ class jobSubmitter(object):
 
         hasCondor = self.tryToGetCondor()
         if not hasCondor:
-            print '"Missing jobs" check will not consider running jobs.'
+            print('"Missing jobs" check will not consider running jobs.')
             return runSet
 
         # exclude removed jobs
@@ -436,7 +436,7 @@ class jobSubmitter(object):
         if len(self.user)>0: constraint += ' && Owner=="'+self.user+'"'
         for cname, collector in parser_dict["collectors"].iteritems():
             if cname not in parser_dict["schedds"]:
-                print "Error: no schedds provided for collector "+cname+", so it will be skipped."
+                print("Error: no schedds provided for collector "+cname+", so it will be skipped.")
                 continue
             else:
                 if len(collector)==0:
@@ -450,7 +450,7 @@ class jobSubmitter(object):
                     for result in schedd.xquery(constraint,["Out"]):
                         runSet.add(self.runningToJobName(result["Out"]))
                 except:
-                    print "Warning: could not locate schedd "+sch
+                    print("Warning: could not locate schedd "+sch)
 
         return runSet
 
@@ -514,7 +514,7 @@ class jobSubmitter(object):
             rc = 0
 
         if rc==0:
-            print "copied logs to "+self.cleanDir+"/"+logname2
+            print("copied logs to "+self.cleanDir+"/"+logname2)
             # remove tmp file
             os.remove(logname)
             # remove tmp dir

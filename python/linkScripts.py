@@ -12,7 +12,7 @@ def linkScripts(dir):
             os.symlink(scriptpath,scriptmp)
             os.rename(scriptmp,script)
         else:
-            print "Cannot locate "+script+" in "+dir
+            print("Cannot locate "+script+" in "+dir)
 
 if __name__=="__main__":
     parser = OptionParser()

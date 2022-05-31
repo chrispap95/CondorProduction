@@ -5,9 +5,9 @@ import sys
 def fprint(msg, newline=True):
     import sys
     if newline:
-        print msg
+        print(msg)
     else:
-        print msg,
+        print(msg,)
     sys.stdout.flush()
 
 #From: https://stackoverflow.com/questions/1883980/find-the-nth-occurrence-of-substring-in-a-string
